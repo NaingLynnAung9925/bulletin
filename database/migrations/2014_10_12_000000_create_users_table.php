@@ -17,10 +17,20 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('image')->default('images/profile.png');
+            $table->string('type', 1)->default(1);
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();  
+            $table->date('dob')->nullable();
+            $table->unsignedBigInteger('created_user_id');
+            $table->foreign('created_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('updated_user_id');
+            $table->foreign('updated_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('deleted_user_id')->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->softDeletes();
         });
     }
 
