@@ -9,10 +9,10 @@ use App\Contracts\Services\User\UserServiceInterface;
 
 class UserController extends Controller
 {
-    private $userInterface;
-    public function __construct(UserServiceInterface $userInterface)
+    private $userService;
+    public function __construct(UserServiceInterface $userService)
     {
-        $this->userInterface = $userInterface;
+        $this->userService = $userService;
     }
 
     public function login()
@@ -49,7 +49,7 @@ class UserController extends Controller
 
     public function user_detail($id)
     {
-        $userDetail = $this->userInterface->getUserDetail($id);
+        $userDetail = $this->userService->getUserDetail($id);
         return view('users.user_detail', ['user' => $userDetail ]);
     }
     /**
@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->userInterface->getUserList();
+        $users = $this->userService->getUserList();
         return view('users.index', ['users'=>$users]);
     }
 
@@ -75,12 +75,9 @@ class UserController extends Controller
 
     public function create_confirm(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-        $user = $this->userInterface->getUserConfirm($request);
+       
+        $user = $this->userService->getUserConfirm($request);
+        
         return view('users.create_confirm', ['user' => $user]);
     }
 
@@ -92,22 +89,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request['created_user_id'] = Auth::user()->id;
-        $request['updated_user_id'] = Auth::user()->id;
-        $user = $this->userInterface->getUserCreate($request);
-        
-        return redirect('/user/users')->with('success', 'User created successfully');
-    }
+     
+        $user = $this->userService->getUserCreate($request);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect('/user/users')->with('success', 'User created successfully');
     }
 
     /**
@@ -118,7 +103,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+       $user = $this->userService->userEdit($id);
+        return view('users.edit', ['user' => $user]);
+    }
+
+    public function edit_confirm(Request $request)
+    {
+        $user = $this->userService->getEditConfirm($request);
+        return view('users.edit_confirm', compact('user'));
     }
 
     /**
@@ -130,7 +122,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $user = $this->userService->userUpdate($request, $id);
+       
+        return redirect("/user/user_detail/$id")->with('success', 'User updated successfully');
     }
 
     /**
@@ -141,6 +136,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->userService->userDelete($id);
+        return redirect()->route('user.index')->with('success', 'User deleted successfully');
     }
 }

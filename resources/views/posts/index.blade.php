@@ -2,9 +2,15 @@
 
 @section('context')
 
-<a href="{{ route('post.create') }}" class="btn btn-primary mb-3">Create Post</a>
+<div class="">
+  <a href="{{ route('post.create') }}" class="btn btn-primary">Create Post</a>
 
-<table class="table">
+  @if (Auth::user()->type == '0')
+    <a href="{{ route('post.restoreAll') }}" class="btn btn-dark float-end">Trashed List</a>
+  @endif
+</div>
+
+<table class="table mt-3">
   <tr>
     <th>Title</th>
     <th>Description</th>
@@ -15,18 +21,21 @@
     <tr>
       <td> {{ $post['title'] }}</td>
       <td> {{ $post['description']}} </td>
-      <td> 
-          <a href="" class="btn btn-secondary">Edit</a>
-      </td>
       <td>
-          <form action="">
+        <a href="{{ route('post.edit', $post->id) }}" class="btn btn-sm btn-outline-secondary d-inline me-3">Edit</a>
+          <form action="{{ route('post.destroy', $post->id) }}" class="d-inline">
             @method('DELETE')
-            <button class="btn btn-danger">Delete</button>
+            <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
           </form>
       </td>
     </tr>
   @endforeach
+
    
 </table>
+
+<div class="d-flex justify-content-center align-items-center">
+  {{ $postData->links() }}
+</div>
 
 @endsection

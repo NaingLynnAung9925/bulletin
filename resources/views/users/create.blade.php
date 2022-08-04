@@ -22,8 +22,15 @@
 			<label for="password">Password</label>
 			<input type="password" name="password" id="password" class="form-control" value="{{ old('password') }}">
 			@error('password')
-      <p class="alert alert-danger form-control">{{ $message }}</p>
-    @enderror
+      	<p class="alert alert-danger form-control">{{ $message }}</p>
+   	 	@enderror
+		</div>
+		<div class="">
+			<label for="cpassword">Confirm Password</label>
+			<input type="password" name="confirm_password" id="cpassword" class="form-control" >
+			@error('confirm_password')
+      	<p class="alert alert-danger form-control">{{ $message }}</p>
+   	 	@enderror
 		</div>
 		<div>
 			<label for="type">Type</label>

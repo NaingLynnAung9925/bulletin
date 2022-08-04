@@ -19,7 +19,7 @@
 			@enderror
 		</div>
 		
-		<button type="submit" class="btn btn-primary mt-3">Confirm</button>
+		<button type="submit" class="btn btn-primary mt-3">Create</button>
 	</form>
 
 @endsection

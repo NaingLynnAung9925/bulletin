@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Auth;
 
-class IsUser
+class IsAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,9 +17,9 @@ class IsUser
      */
     public function handle(Request $request, Closure $next)
     {
-       if(Auth::check() && Auth::user()->type == '0'){
-            return $request($next);
+        if(Auth::check() && Auth::user()->type == '0'){
+            return $next($request);
        }
-       return redirect('/login');
+       return redirect('/');
     }
 }

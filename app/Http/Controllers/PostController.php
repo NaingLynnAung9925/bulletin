@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contracts\Services\Post\PostServiceInterface;
 use Auth;
+
 class PostController extends Controller
 {
-    private $postInterface;
-    public function __construct(PostServiceInterface $postInterface)
+    private $postService;
+    public function __construct(PostServiceInterface $postService)
     {
-        $this->postInterface = $postInterface;
+        $this->postService = $postService;
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $postData = $this->postInterface->getpostList($request);
+        $postData = $this->postService->getpostList($request);
         return view('posts.index', ['postData' => $postData]);
     }
 
@@ -39,7 +40,7 @@ class PostController extends Controller
             'title' => 'required',
             'description' => 'required'
         ]);
-        $createData = $this->postInterface->getPostConfirm($request);
+        $createData = $this->postService->getPostConfirm($request);
         return view('posts.create_confirm', ['createData' => $createData]);
     }
 
@@ -53,20 +54,10 @@ class PostController extends Controller
     {
         $request['created_user_id'] = Auth::user()->id;
         $request['updated_user_id'] = Auth::user()->id;
-        $post = $this->postInterface->getPostCreate($request);
+        $post = $this->postService->getPostCreate($request);
         return redirect('/')->with('success', 'Post created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -76,7 +67,14 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = $this->postService->postEdit($id);
+        return view('posts.edit', ['post' => $post]);
+    }
+
+    public function edit_confirm(Request $request)
+    {
+        $post = $this->postService->getEditConfirm($request);
+        return view('posts.edit_confirm', ['post' => $post]);
     }
 
     /**
@@ -88,7 +86,8 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->postService->postUpdate($request, $id);
+        return redirect('/')->with('success', 'Post updated successfully');
     }
 
     /**
@@ -99,6 +98,19 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $this->postService->postDelete($id);
+       return redirect()->route('post.index')->with('success', 'Post deleted successfully');
+    }
+
+    public function restoreAll()
+    {
+       $post = $this->postService->postRestore();
+       return view('posts.restore', ['post' => $post]);
+    }
+
+    public function restoreItem($id)
+    {
+        $postRestore = $this->postService->restoreItem($id);
+        return redirect()->route('post.index')->with('success', 'Post restored successfully');
     }
 }

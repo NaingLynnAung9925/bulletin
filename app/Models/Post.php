@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use SoftDeletes;
+    use HasFactory;
     protected $fillable = [
         'title',
         'description',
         'created_user_id',
-        'updated_user_id'
+        'updated_user_id',
+        'deleted_user_id'
     ];
 
     public function user(){

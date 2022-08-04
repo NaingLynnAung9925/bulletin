@@ -13,7 +13,7 @@
 				<input type="text" id="description" name="description" class="form-control" value="{{ $createData['description'] }}" readonly> 
 			</div>
 			
-			<button type="submit" class="btn btn-primary mt-3">Create</button>
+			<button type="submit" class="btn btn-primary mt-3">Confirm</button>
 	</form>
 
 @endsection

@@ -12,11 +12,8 @@
       width: 25%!important;
     }
   </style>
-</head>
+</head> 
 <body>
-  
-  
-
   <div class="container">
 
     @if($message = Session::get('success'))

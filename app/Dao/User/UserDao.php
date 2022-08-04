@@ -4,25 +4,28 @@ namespace App\Dao\User;
 use App\Contracts\Dao\User\UserDaoInterface;
 use App\Models\User;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 class userDao implements UserDaoInterface
 {
     public function getUserList()
     {
-        $users = User::where('deleted_user_id', null)->paginate(5);
+        $users = User::where('deleted_user_id', null)->simplePaginate(5);
         return $users;
     }
 
     public function getUserConfirm($request)
     {
-        if($request->hasFile('image')){
-            $image = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $image);
-            $request['image'] = $image;
-        }else{
-            $request['image'] = '/images/profile.png';
-        }
         
-        $user = $request->all();
+        $user = [
+            'name'  => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'type' => $request->type,
+            'image' => $request->image,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'dob' => $request->dob,
+        ];
         
         return $user;
     }
@@ -34,13 +37,8 @@ class userDao implements UserDaoInterface
         }else{
             $request->type = 1;
         }
-        if($request->hasFile('image')){
-            $image = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $image);
-            $request['image'] = $image;
-        }else{
-            $request['image'] = '/images/profile.png';
-        }
+        $request['created_user_id'] = Auth::user()->id;
+        $request['updated_user_id'] = Auth::user()->id;
        
         $user = new User([
             'name' => $request->name,
@@ -54,8 +52,10 @@ class userDao implements UserDaoInterface
             'created_user_id' => $request->created_user_id,
             'updated_user_id' => $request->created_user_id
         ]);
-    
+        
+       
         $user->save();
+        
         return $user;
     }
     public function getUserDetail($id)
@@ -69,6 +69,59 @@ class userDao implements UserDaoInterface
         }else{
             $user->type = 'User';
         }
+        return $user;
+    }
+    public function userDelete($id)
+    {
+        $user = User::find($id);
+        $user->deleted_user_id = Auth::user()->id;
+        $user->delete();
+        $user->save();
+        return $user;
+    }
+    public function userEdit($id)
+    {
+        $user = User::find($id);
+        return $user;
+    }
+    public function getEditConfirm($request)
+    {
+
+        $user = [
+            'id' => $request->id,
+            'name'  => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'type' => $request->type,
+            'image' => $request->image,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'dob' => $request->dob,
+        ];
+        
+        return $user;
+    }
+    public function userUpdate($request, $id)
+    {
+
+        if($request->type == 'Admin'){
+            $request->type = 0;
+        }else{
+            $request->type = 1;
+        }
+        $request['updated_user_id'] = Auth::user()->id;
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->image = $request->image;
+        $user->type = $request->type;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->dob = $request->dob;
+        $user->updated_user_id = $request->updated_user_id;
+        $user->update();
+       
         return $user;
     }
 }
