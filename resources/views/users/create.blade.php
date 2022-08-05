@@ -2,34 +2,35 @@
 
 @section('context')
 
-	<form action="{{ route('user.create_confirm')}}" method="POST" enctype="multipart/form-data">
+	<form action="{{ route('user.create_confirm')}}" method="POST" enctype="multipart/form-data" class="form-width">
 		@csrf
+		<h2>User Create</h2>
 		<div class="">
 			<label for="name">Name</label>
-			<input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
+			<input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
 			@error('name')
-      <p class="alert alert-danger form-control">{{ $message }}</p>
+      <p class="text-danger">{{ $message }}</p>
     @enderror
 		</div>
 		<div class="">
 			<label for="email">Email</label>
-			<input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+			<input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
 			@error('email')
-      <p class="alert alert-danger form-control">{{ $message }}</p>
+      <p class="text-danger">{{ $message }}</p>
     @enderror
 		</div>
 		<div class="">
 			<label for="password">Password</label>
-			<input type="password" name="password" id="password" class="form-control" value="{{ old('password') }}">
+			<input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
 			@error('password')
-      	<p class="alert alert-danger form-control">{{ $message }}</p>
+      	<p class="text-danger">{{ $message }}</p>
    	 	@enderror
 		</div>
 		<div class="">
 			<label for="cpassword">Confirm Password</label>
-			<input type="password" name="confirm_password" id="cpassword" class="form-control" >
+			<input type="password" name="confirm_password" id="cpassword" class="form-control @error('confirm_password') is-invalid @enderror" >
 			@error('confirm_password')
-      	<p class="alert alert-danger form-control">{{ $message }}</p>
+      	<p class="text-danger">{{ $message }}</p>
    	 	@enderror
 		</div>
 		<div>
@@ -55,7 +56,10 @@
 			<label for="image">Profile</label>
 			<input type="file" name="image" id="image" class="form-control">
 		</div>
-		<button class="btn btn-primary mt-3" type="submit">Confirm</button>
+		<div class="mt-3">
+			<a href="{{ route('user.index') }}" class="btn btn-dark">Back</a>
+			<button class="btn btn-color" type="submit">Create</button>
+		</div>
 
 	</form>
 

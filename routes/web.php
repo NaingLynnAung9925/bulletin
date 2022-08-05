@@ -26,13 +26,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/logout', [UserController::class, 'logout'])->name('user.logout');
         Route::get('/users', [UserController::class, 'index'])->name('user.index')->middleware('is.admin');
         Route::get('/create', [UserController::class, 'create'])->name('user.create')->middleware('is.admin');
-        Route::post('/create_confirm', [UserController::class, 'create_confirm'])->name('user.create_confirm')->middleware('is.admin');
+        Route::post('/create_confirm', [UserController::class, 'createConfirm'])->name('user.create_confirm')->middleware('is.admin');
         Route::post('/store', [UserController::class, 'store'])->name('user.store');
-        Route::get('/user_detail/{id}', [UserController::class, 'user_detail'])->name('user.user_detail');
+        Route::get('/user_detail/{id}', [UserController::class, 'userDetail'])->name('user.user_detail');
         Route::get('/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-        Route::post('/edit_confirm', [UserController::class, 'edit_confirm'])->name('user.edit_confirm');
+        Route::post('/edit_confirm', [UserController::class, 'editConfirm'])->name('user.edit_confirm');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::get('/change_password', [UserController::class, 'password'])->name('user.password');
+        Route::post('/confirm_password', [UserController::class, 'confirmPassword'])->name('user.confirm_password');
+        Route::get('/search', [UserController::class, 'search'])->name('user.search');
     });
     Route::prefix('post')->group(function () {
         Route::get('/create', [PostController::class, 'create'])->name('post.create');

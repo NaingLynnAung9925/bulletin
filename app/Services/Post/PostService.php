@@ -33,10 +33,6 @@ class PostService implements PostServiceInterface
     }
     public function getEditConfirm($request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required'
-        ]);
         return $this->postDao->getEditConfirm($request);
     }
     public function postUpdate($request, $id)

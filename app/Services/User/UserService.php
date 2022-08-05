@@ -17,12 +17,6 @@ class UserService implements UserServiceInterface
     }
     public function getUserConfirm($request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required|min:5',
-            'confirm_password' => 'required|same:password'
-        ]);
         
         if($request->hasFile('image')){
             $fileName = time().'.'.$request->image->extension();
@@ -41,6 +35,8 @@ class UserService implements UserServiceInterface
             $fileName = time().'.'.$request->image->extension();
             Storage::putFileAs('public/images', $request->file('image'), $fileName);
             $request->image = '/storage/images/'.$fileName;
+        }else{
+            $request->image = '/images/profile.png';
         }
         return $this->userDao->getUserCreate($request);
     }
@@ -58,17 +54,12 @@ class UserService implements UserServiceInterface
     }
     public function getEditConfirm($request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-        ]);
-
+       
         if($request->hasFile('image')){
 
             $fileName = time().'.'.$request->image->extension();
             Storage::putFileAs('public/images', $request->file('image'), $fileName);
-             $request->image = '/storage/images/'.$fileName;
-            
+            $request->image = '/storage/images/'.$fileName;
         }else{
             $request->image = '/images/profile.png';
         }
@@ -78,4 +69,12 @@ class UserService implements UserServiceInterface
         
         return $this->userDao->userUpdate($request, $id);
     }   
+    public function confirmPassword($request)
+    {
+        return $this->userDao->confirmPassword($request);
+    }
+    public function userSearch($request)
+    {
+        return $this->userDao->userSearch($request);
+    }
 }

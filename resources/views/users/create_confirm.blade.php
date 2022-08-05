@@ -1,9 +1,16 @@
 @extends('master')
 
 @section('context')
-<form action="{{ route('user.store')}}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('user.store')}}" method="POST" enctype="multipart/form-data" class="form-width">
   @csrf
-  <div class="">
+
+  @if ($user['image'])
+  <input type="hidden" value="{{$user['image'] }}">
+  <div class="image-center">
+    <img src="{{ asset($user['image']) }}" alt="Profile Image" class=" rounded-circle" width="100" height="100">
+  </div>
+@endif
+   <div>
     <label for="name">Name</label>
     <input type="text" name="name" id="name" class="form-control" value="{{ $user['name'] }}" readonly>
   </div>
@@ -37,13 +44,11 @@
       <input type="date" name="dob" id="dob" class="form-control" value="{{ $user['dob'] }}" readonly>
     </div>
     @endif
-  @if ($user['image'])
-    <div>
-      <label for="image">Profile</label>
-      <input type="text" name="image" id="image" class="form-control" value="{{ $user['image'] }}" readonly>
-    </div>
-  @endif
-  <button class="btn btn-primary mt-3" type="submit">Confirm</button>
+
+  <div class="mt-3">
+    <a href="{{ route('user.create') }}" class="btn btn-dark">Back</a>
+    <button class="btn btn-color" type="submit">Confirm</button>
+  </div>
 
 </form>
 @endsection

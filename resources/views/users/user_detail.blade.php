@@ -30,9 +30,9 @@
 			<label for="dob">Dob</label>
 			<input type="date" name="dob" id="dob" class="form-control" value="{{ $user['dob'] }}" disabled>
 		</div>
+		<a href="{{ route('user.password') }}">Change Password</a>
 		
+		<a href="{{ route('user.edit', $user->id) }}" class="btn btn-color d-block mt-3">Edit Profile</a>
   </form>
-	<div class="">
-		<a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mt-3">Edit Profile</a>
-	</div>
+
 @endsection

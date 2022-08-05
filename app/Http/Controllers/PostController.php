@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PostCreateRequest;
 use App\Contracts\Services\Post\PostServiceInterface;
 use Auth;
 
@@ -34,11 +35,10 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function create_confirm(Request $request)
+    public function create_confirm(PostCreateRequest $request)
     {   
         $request->validate([
-            'title' => 'required',
-            'description' => 'required'
+            
         ]);
         $createData = $this->postService->getPostConfirm($request);
         return view('posts.create_confirm', ['createData' => $createData]);
@@ -71,7 +71,7 @@ class PostController extends Controller
         return view('posts.edit', ['post' => $post]);
     }
 
-    public function edit_confirm(Request $request)
+    public function edit_confirm(PostCreateRequest $request)
     {
         $post = $this->postService->getEditConfirm($request);
         return view('posts.edit_confirm', ['post' => $post]);
@@ -104,8 +104,8 @@ class PostController extends Controller
 
     public function restoreAll()
     {
-       $post = $this->postService->postRestore();
-       return view('posts.restore', ['post' => $post]);
+       $posts = $this->postService->postRestore();
+       return view('posts.restore', ['posts' => $posts]);
     }
 
     public function restoreItem($id)

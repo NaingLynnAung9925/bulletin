@@ -2,7 +2,33 @@
   width: 400px;
   margin: auto;
 }
+.login-center {
+  margin-top: 200px;
+}
 .image-center {
   width: 100px;
   margin: 0 auto;
+}
+.btn-center {
+  position: relative;
+}
+.btn-center-item {
+  position: absolute;
+  left: 34.5%;
+}
+
+.user-detail:hover {
+  border-radius: 20px;
+  background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  
+}
+.user-detail {
+  border-radius: 20px;
+  padding-right: 5px!important;
+  color: #fff!important;
+}
+
+.btn-color {
+  background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  color: #fff!important;
 }

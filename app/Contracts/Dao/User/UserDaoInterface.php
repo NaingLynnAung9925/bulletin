@@ -12,5 +12,6 @@ interface UserDaoInterface
     public function userEdit($id);
     public function getEditConfirm($request);
     public function userUpdate($request, $id);
+    public function confirmPassword($request);
+    public function userSearch($request);
 }
-

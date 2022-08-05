@@ -5,6 +5,8 @@ use App\Contracts\Dao\User\UserDaoInterface;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+
 class userDao implements UserDaoInterface
 {
     public function getUserList()
@@ -122,6 +124,22 @@ class userDao implements UserDaoInterface
         $user->updated_user_id = $request->updated_user_id;
         $user->update();
        
+        return $user;
+    }
+    public function confirmPassword($request)
+    {
+            
+        $user = Auth::user();
+        $user->password = bcrypt($request->new_password);
+        $user->updated_user_id = Auth::user()->id;
+        $user->save();
+        return $user;
+           
+    }
+    public function userSearch($search)
+    {
+        $user = User::where('name', 'LIKE', '%'. $search . '%')
+                    ->simplePaginate(5);
         return $user;
     }
 }

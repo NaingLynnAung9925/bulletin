@@ -7,11 +7,7 @@
   <title>Bulletin Board</title>
   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-  <style>
-    .form-control {
-      width: 25%!important;
-    }
-  </style>
+  <link rel="stylesheet" href="css/app.css">
 </head> 
 <body>
   <div class="container">
@@ -21,26 +17,31 @@
         <p>{{ $message }}</p>
       </div>
     @endif
+    @if($message = Session::get('error'))
+    <div class="alert alert-success">
+      <p>{{ $message }}</p>
+    </div>
+  @endif
 
-    <h2 class="mt-5">Login Form</h2>
-    <form action="" method="POST">
+  <form action="" method="POST" class="form-width login-center">
+      <h2 class="mt-5">Login Form</h2>
       @csrf
       <div>
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+        <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
         @error('email')
-          <p class="alert alert-danger form-control">{{ $message }}</p>
+          <p class="text-danger">{{ $message }}</p>
         @enderror
       </div>
 
       <div>
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" class="form-control">
+        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror">
         @error('password')
-          <p class="alert alert-danger form-control">{{ $message }}</p>
+          <p class="text-danger">{{ $message }}</p>
         @enderror
       </div>
-      <button class="btn btn-primary mt-3" type="submit">Login</button>
+      <button class="btn btn-color mt-3" type="submit">Login</button>
     </form>
   </div>
 

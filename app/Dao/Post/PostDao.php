@@ -75,7 +75,7 @@ class PostDao implements PostDaoInterface
     }
     public function postRestore()
     {
-        $post = Post::onlyTrashed()->get();
+        $post = Post::onlyTrashed()->simplePaginate(5);
         return $post;
     }
     public function restoreItem($id)

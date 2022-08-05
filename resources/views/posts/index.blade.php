@@ -3,14 +3,15 @@
 @section('context')
 
 <div class="">
-  <a href="{{ route('post.create') }}" class="btn btn-primary">Create Post</a>
+  <a href="{{ route('post.create') }}" class="btn btn-color">Create Post</a>
 
   @if (Auth::user()->type == '0')
     <a href="{{ route('post.restoreAll') }}" class="btn btn-dark float-end">Trashed List</a>
   @endif
 </div>
 
-<table class="table mt-3">
+<table class="table mt-3 table-striped table-hover table-dark">
+  <caption>List of Posts</caption>
   <tr>
     <th>Title</th>
     <th>Description</th>

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\PasswordRequest;
+use App\Http\Requests\EditUserRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Contracts\Services\User\UserServiceInterface;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -20,13 +25,9 @@ class UserController extends Controller
         return view('users.login');
     }
 
-    public function truthLogin(Request $request)
+    public function truthLogin(LoginRequest $request)
     {
-       
-         $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+
         $credentials = [
             'email' => $request->email,
             'password' => $request->password
@@ -36,18 +37,19 @@ class UserController extends Controller
             return redirect()->intended('/');
         }
         return back()->withErrors([
-            'password' => 'The provided credentials do not match our records.',
-        ])->onlyInput('password');
+            'email' => ' ',
+            'password' => 'Email or Password is incorrect',
+        ]);
     }
 
     public function logout()
     {
         
         Auth::logout();
-        return redirect('/login')->with('success', "Logout Successfully");
+        return redirect('/login')->with('error', "Logout Successfully");
     }
 
-    public function user_detail($id)
+    public function userDetail($id)
     {
         $userDetail = $this->userService->getUserDetail($id);
         return view('users.user_detail', ['user' => $userDetail ]);
@@ -73,9 +75,9 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function create_confirm(Request $request)
+    public function createConfirm(UserCreateRequest $request)
     {
-       
+
         $user = $this->userService->getUserConfirm($request);
         
         return view('users.create_confirm', ['user' => $user]);
@@ -107,7 +109,7 @@ class UserController extends Controller
         return view('users.edit', ['user' => $user]);
     }
 
-    public function edit_confirm(Request $request)
+    public function editConfirm(EditUserRequest $request)
     {
         $user = $this->userService->getEditConfirm($request);
         return view('users.edit_confirm', compact('user'));
@@ -138,5 +140,31 @@ class UserController extends Controller
     {
         $this->userService->userDelete($id);
         return redirect()->route('user.index')->with('success', 'User deleted successfully');
+    }
+
+    public function password()
+    {
+        return view('users.password');
+    }
+    public function confirmPassword(PasswordRequest $request)
+    {
+
+        if(Hash::check($request->current_password, Auth::user()->password)){
+            $user = $this->userService->confirmPassword($request);
+            return redirect("/user/user_detail/$user->id")->with('success', 'Password Change successfully');
+        }
+        
+        return back()->with('error', 'Current Password does not match');
+
+    }
+
+    public function search(Request $request)
+    {
+        $users = $this->userService->userSearch($request->search);
+       if(count($users) > 0){
+            return view('users.index', compact('users'))->withQuery($users);
+       }else{
+            return redirect('/user/users');
+       }
     }
 }

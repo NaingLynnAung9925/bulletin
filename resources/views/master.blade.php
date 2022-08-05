@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg bg-light px-5">
+	<nav class="navbar navbar-expand-lg px-5 navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="{{ route('post.index') }}">BULLETINBOARD</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,8 @@
 						<a class="nav-link " href="{{ route('post.index') }}">Posts List</a>
 					</li>
 				</ul>
-				<a class="nav-link" href="{{ route('user.user_detail', Auth::user()->id) }}">User Profile</a>
+				
+				<a class="nav-link user-detail" href="{{ route('user.user_detail', Auth::user()->id) }}"><img src="{{ asset(Auth::user()->image) }}" alt="" width="35" height="35" class="rounded-circle me-2">User Detail</a>
 				<a href="{{ route('user.logout') }}" class="btn btn-sm btn-danger float-right ms-4">Logout</a>
 				
 			</div>
@@ -43,11 +44,18 @@
 				<p>{{ $message }}</p>
 			</div>
 		@endif
+		@if ($message = Session::get('error'))
+			<div class="alert alert-danger">
+				<p>{{ $message }}</p>
+			</div>
+		@endif
+		
 
 		@yield('context')
 	</div>
 
     <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
 </body>
 </html>
