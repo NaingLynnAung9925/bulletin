@@ -5,11 +5,12 @@
   @csrf
 
   @if ($user['image'])
-  <input type="hidden" value="{{$user['image'] }}">
+  <input type="hidden" name="image" value="{{$user['image'] }}">
+  
   <div class="image-center">
     <img src="{{ asset($user['image']) }}" alt="Profile Image" class=" rounded-circle" width="100" height="100">
   </div>
-@endif
+  @endif
    <div>
     <label for="name">Name</label>
     <input type="text" name="name" id="name" class="form-control" value="{{ $user['name'] }}" readonly>

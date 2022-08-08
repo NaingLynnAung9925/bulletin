@@ -34,7 +34,7 @@ class UserController extends Controller
         ];
         
         if(Auth::attempt($credentials)){
-            return redirect()->intended('/');
+            return redirect()->intended('/')->with('success', 'Login Successfully');
         }
         return back()->withErrors([
             'email' => ' ',
@@ -91,7 +91,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-     
         $user = $this->userService->getUserCreate($request);
 
         return redirect('/user/users')->with('success', 'User created successfully');
@@ -139,7 +138,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->userService->userDelete($id);
-        return redirect()->route('user.index')->with('success', 'User deleted successfully');
+        return redirect()->route('user.index')->with('error', 'User deleted successfully');
     }
 
     public function password()
@@ -161,10 +160,10 @@ class UserController extends Controller
     public function search(Request $request)
     {
         $users = $this->userService->userSearch($request->search);
-       if(count($users) > 0){
-            return view('users.index', compact('users'))->withQuery($users);
-       }else{
+        if(count($users) > 0){
+            return view('users.index', compact('users'));
+        }else{
             return redirect('/user/users');
-       }
+        }
     }
 }

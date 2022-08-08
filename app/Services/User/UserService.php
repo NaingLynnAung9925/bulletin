@@ -31,13 +31,6 @@ class UserService implements UserServiceInterface
     }
     public function getUserCreate($request)
     {
-        if($request->hasFile('image')){
-            $fileName = time().'.'.$request->image->extension();
-            Storage::putFileAs('public/images', $request->file('image'), $fileName);
-            $request->image = '/storage/images/'.$fileName;
-        }else{
-            $request->image = '/images/profile.png';
-        }
         return $this->userDao->getUserCreate($request);
     }
     public function getUserDetail($id)
@@ -56,7 +49,6 @@ class UserService implements UserServiceInterface
     {
        
         if($request->hasFile('image')){
-
             $fileName = time().'.'.$request->image->extension();
             Storage::putFileAs('public/images', $request->file('image'), $fileName);
             $request->image = '/storage/images/'.$fileName;

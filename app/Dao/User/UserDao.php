@@ -139,6 +139,8 @@ class userDao implements UserDaoInterface
     public function userSearch($search)
     {
         $user = User::where('name', 'LIKE', '%'. $search . '%')
+                    ->orWhere('email', 'LIKE', '%'. $search . '%')
+                    ->orWhere('address', 'LIKE', '%' . $search . '%')
                     ->simplePaginate(5);
         return $user;
     }

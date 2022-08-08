@@ -47,4 +47,8 @@ class PostService implements PostServiceInterface
     {
         return $this->postDao->restoreItem($id);
     }
+    public function postSearch($search)
+    {
+        return $this->postDao->postSearch($search);
+    }
 }

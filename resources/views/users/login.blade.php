@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/app.css">
 </head> 
 <body>
-  <div class="container">
+  <div class="container mt-5">
 
     @if($message = Session::get('success'))
       <div class="alert alert-success">
@@ -18,7 +18,7 @@
       </div>
     @endif
     @if($message = Session::get('error'))
-    <div class="alert alert-success">
+    <div class="alert alert-danger">
       <p>{{ $message }}</p>
     </div>
   @endif

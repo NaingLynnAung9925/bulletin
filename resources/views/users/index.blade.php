@@ -7,7 +7,7 @@
 <div class="row float-end">
   <form class="d-flex" role="search" action="{{ route('user.search') }}">
     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="{{request('search')}}">
-    <button class="btn btn-outline-success" type="submit">Search</button>
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
   </form>
 </div>
 

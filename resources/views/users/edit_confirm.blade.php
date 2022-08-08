@@ -43,7 +43,7 @@
   </div>
   <div>
     <label for="image">Profile</label>
-    <input type="text" name="image" id="image" class="form-control" value="{{ $user['image'] }}" readonly>
+    <input type="hidden" name="image" id="image" class="form-control" value="{{ $user['image'] }}" readonly>
   </div>
   <div class="mt-3">
     

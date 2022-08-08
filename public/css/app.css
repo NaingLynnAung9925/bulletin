@@ -1,3 +1,7 @@
+.active .nav-link {
+  color: #fff;
+}
+
 .form-width {
   width: 400px;
   margin: auto;
@@ -32,3 +36,7 @@
   background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
   color: #fff!important;
 }
+p {
+  margin: 0!important;
+}
+

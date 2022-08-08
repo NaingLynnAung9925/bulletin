@@ -113,4 +113,17 @@ class PostController extends Controller
         $postRestore = $this->postService->restoreItem($id);
         return redirect()->route('post.index')->with('success', 'Post restored successfully');
     }
+    public function search(Request $request)
+    {
+        $postData = $this->postService->postSearch($request->search);
+        if(count($postData) > 0)
+        {
+            return view('posts.index', compact('postData'));
+        }
+        return redirect('/')->with('error', 'Result does not have in our records');
+    }
+    public function importFile()
+    {
+        return view('posts.import_file');
+    }
 }

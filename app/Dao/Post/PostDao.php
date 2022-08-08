@@ -83,4 +83,14 @@ class PostDao implements PostDaoInterface
         $post = Post::onlyTrashed()->find($id)->restore();
         return $post;
     }
+    public function postSearch($search)
+    {
+        $post = Post::where('title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('description', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('user', function($user) use($search){
+                        $user->where('name', 'LIKE', '%' . $search . '%');
+                    })
+                    ->simplePaginate(5);
+        return $post;
+    }
 }

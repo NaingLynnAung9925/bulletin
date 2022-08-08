@@ -13,4 +13,5 @@ interface PostDaoInterface
     public function postUpdate($request, $id);
     public function postRestore();
     public function restoreItem($id);
+    public function postSearch($search);
 }

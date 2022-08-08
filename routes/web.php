@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\ImportExportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,5 +47,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update/{id}', [PostController::class, 'update'])->name('post.update');
         Route::get('/restoreAll', [PostController::class, 'restoreAll'])->name('post.restoreAll')->middleware('is.admin');
         Route::get('/restore/{id}', [PostController::class, 'restoreItem'])->name('post.restoreItem')->middleware('is.admin');
+        Route::get('/search', [PostController::class, 'search'])->name('post.search');
+        Route::get('/import-file', [PostController::class, 'importFile'])->name('post.importFile');
+        Route::post('/import', [ImportExportController::class, 'import'])->name('post.import');
+        Route::get('/export', [ImportExportController::class, 'export'])->name('post.export');
     });
 });

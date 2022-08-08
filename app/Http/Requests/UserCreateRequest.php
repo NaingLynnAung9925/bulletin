@@ -27,7 +27,8 @@ class UserCreateRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required|min:5',
-            'confirm_password' => 'required|same:password'
+            'confirm_password' => 'required|same:password',
+            'image' => 'mimes:png,jpg,jpeg'
         ];
     }
     public function messages()
@@ -37,6 +38,7 @@ class UserCreateRequest extends FormRequest
             'email.required' => 'Email is required',
             'password.required' => 'Password is required',
             'confirm_password.required' => 'Confirm_password is required',
+            'image' => 'mimes:png,jpg,jpeg'
         ];
     }
 }
