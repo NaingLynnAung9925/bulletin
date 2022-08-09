@@ -32,14 +32,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = $this->postService->getCategory();
+        return view('posts.create', compact('categories'));
     }
 
     public function create_confirm(PostCreateRequest $request)
     {   
-        $request->validate([
-            
-        ]);
+
         $createData = $this->postService->getPostConfirm($request);
         return view('posts.create_confirm', ['createData' => $createData]);
     }
@@ -99,7 +98,7 @@ class PostController extends Controller
     public function destroy($id)
     {
        $this->postService->postDelete($id);
-       return redirect()->route('post.index')->with('success', 'Post deleted successfully');
+       return redirect()->route('post.index')->with('error', 'Post deleted successfully');
     }
 
     public function restoreAll()
@@ -113,6 +112,13 @@ class PostController extends Controller
         $postRestore = $this->postService->restoreItem($id);
         return redirect()->route('post.index')->with('success', 'Post restored successfully');
     }
+
+    public function delete($id)
+    {
+        $this->postService->delete($id);
+        return redirect()->route('post.restoreAll')->with('error', 'Post permanently deleted successfully');
+    }
+
     public function search(Request $request)
     {
         $postData = $this->postService->postSearch($request->search);
@@ -125,5 +131,10 @@ class PostController extends Controller
     public function importFile()
     {
         return view('posts.import_file');
+    }
+    public function import(Request $request)
+    {
+        $this->postService->importCsv($request);
+        return redirect('/')->with('success', 'Import successfully');
     }
 }

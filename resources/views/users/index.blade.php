@@ -2,10 +2,10 @@
 
 @section('context')
 
-
 <a href="{{ route('user.create') }}" class="btn mb-3 btn-color">Create User</a>
 <div class="row float-end">
-  <form class="d-flex" role="search" action="{{ route('user.search') }}">
+  <form class="d-flex" role="search" action="{{ route('user.search') }}" method="POST">
+    @csrf
     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="{{request('search')}}">
     <button class="btn btn-outline-secondary" type="submit">Search</button>
   </form>
@@ -51,9 +51,9 @@
       </tr>
     @endforeach
   </table>
-  <div class="d-flex justify-content-center align-items-center">
+
     {{ $users->links() }}
-  </div>
+
 
 
 @endsection

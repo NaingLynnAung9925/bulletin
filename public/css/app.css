@@ -24,7 +24,10 @@
 .user-detail:hover {
   border-radius: 20px;
   background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
-  
+}
+.user-active {
+  border-radius: 20px;
+  background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
 }
 .user-detail {
   border-radius: 20px;
@@ -38,5 +41,12 @@
 }
 p {
   margin: 0!important;
+}
+
+.active>.page-link, .page-link.active {
+  z-index: 3;
+  color: #fff!important;
+  background: rgb(32, 58, 67)!important;
+  border-color: rgb(32, 58, 67)!important;
 }
 

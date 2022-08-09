@@ -35,8 +35,8 @@ class PostsExport implements FromCollection, WithMapping, WithHeadings
             "Title",
             'Description',
             'Created User Name',
-            'Created User Id',
-            'Updated User Id'
+            'Created_User_Id',
+            'Updated_User_Id'
         ];
     }
 }

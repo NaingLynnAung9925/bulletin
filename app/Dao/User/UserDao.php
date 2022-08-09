@@ -11,7 +11,7 @@ class userDao implements UserDaoInterface
 {
     public function getUserList()
     {
-        $users = User::where('deleted_user_id', null)->simplePaginate(5);
+        $users = User::where('deleted_user_id', null)->paginate(10);
         return $users;
     }
 
@@ -55,7 +55,6 @@ class userDao implements UserDaoInterface
             'updated_user_id' => $request->created_user_id
         ]);
         
-       
         $user->save();
         
         return $user;
@@ -141,7 +140,7 @@ class userDao implements UserDaoInterface
         $user = User::where('name', 'LIKE', '%'. $search . '%')
                     ->orWhere('email', 'LIKE', '%'. $search . '%')
                     ->orWhere('address', 'LIKE', '%' . $search . '%')
-                    ->simplePaginate(5);
+                    ->paginate(5);
         return $user;
     }
 }

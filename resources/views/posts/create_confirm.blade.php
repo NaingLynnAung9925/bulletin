@@ -13,6 +13,14 @@
 				<label for="description">Description</label>
 				<input type="text" id="description" name="description" class="form-control" value="{{ $createData['description'] }}" readonly> 
 			</div>
+			<div>
+				<label for="catgories">Category List :</label>
+				<select name="categories[]" id="" class="form-control" multiple >
+					@foreach ($createData['categories'] as $category)
+					<option value="{{ $category }}" selected>{{ $category }}</option>
+					@endforeach
+				</select>
+			</div>
 			
 			<button type="submit" class="btn btn-color mt-3">Confirm</button>
 	</form>

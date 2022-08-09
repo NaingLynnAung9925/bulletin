@@ -19,6 +19,15 @@
 				<p class="text-danger">{{ $message }}</p>
 			@enderror
 		</div>
+		<div class="">
+			<label for="categories">Categories</label>
+			<select name="categories[]" id="categories" class="form-select" multiple>
+				<option value="" selected>Select Category</option>
+				@foreach ($categories as $category)
+					<option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
+				@endforeach
+			</select>
+		</div>
 		
 		<button type="submit" class="btn btn-color mt-3">Create</button>
 	</form>

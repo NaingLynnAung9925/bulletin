@@ -15,40 +15,64 @@ class PostService implements PostServiceInterface
     {
         return $this->postDao->getPostList($request);
     }
+
+    public function getCategory()
+    {
+        return $this->postDao->getCategory();
+    }
+
     public function getPostConfirm($request)
     {
         return $this->postDao->getPostConfirm($request);
     }
+
     public function getPostCreate($request)
     {
         return $this->postDao->getPostCreate($request);
     }
+
     public function postDelete($id)
     {
         return $this->postDao->postDelete($id);
     }
+
     public function postEdit($id)
     {
         return $this->postDao->postEdit($id);
     }
+
     public function getEditConfirm($request)
     {
         return $this->postDao->getEditConfirm($request);
     }
+
     public function postUpdate($request, $id)
     {
         return $this->postDao->postUpdate($request, $id);
     }
+
     public function postRestore()
     {
         return $this->postDao->postRestore();
     }
+
     public function restoreItem($id)
     {
         return $this->postDao->restoreItem($id);
     }
+
+    public function delete($id)
+    {
+        return $this->postDao->delete($id);
+    }
+
     public function postSearch($search)
     {
         return $this->postDao->postSearch($search);
+    }
+
+    public function importCsv($request)
+    {
+        return $this->postDao->importCsv($request);
     }
 }

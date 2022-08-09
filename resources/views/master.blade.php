@@ -27,8 +27,10 @@
 					<li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ route('post.index') }}">Posts List</a>
 					</li>
+					<li class="nav-item {{ Request::is('category/categories') ? 'active' : '' }}">
+						<a href="{{ route('category.index') }}" class="nav-link">Category List</a>
+					</li>
 				</ul>
-				
 				<a class="nav-link user-detail" href="{{ route('user.user_detail', Auth::user()->id) }}"><img src="{{ asset(Auth::user()->image) }}" alt="" width="35" height="35" class="rounded-circle me-2">{{ Auth::user()->name }}</a>
 				<a href="{{ route('user.logout') }}" class="btn btn-sm btn-danger float-right ms-4">Logout</a>
 				

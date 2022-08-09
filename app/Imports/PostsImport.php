@@ -6,9 +6,9 @@ use App\Models\Post;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\WithUpsertColumns;
 
-class PostsImport implements ToModel, WithHeadingRow, WithUpsertColumns
+
+class PostsImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -18,7 +18,7 @@ class PostsImport implements ToModel, WithHeadingRow, WithUpsertColumns
     public function model(array $row)
     {
       
-        return new Post([
+        return Post::updateOrCreate([
             'id' => $row['id'],
             'title' => $row['title'],
             'description' => $row['description'],
@@ -34,8 +34,5 @@ class PostsImport implements ToModel, WithHeadingRow, WithUpsertColumns
             // 'title' => "unique:posts,title"
         ];
     }
-    public function upsertColumns()
-    {
-        return ['title', 'description'];
-    }
+
 }

@@ -163,7 +163,7 @@ class UserController extends Controller
         if(count($users) > 0){
             return view('users.index', compact('users'));
         }else{
-            return redirect('/user/users');
+            return redirect('/user/users')->with('error', "$request->search does not found !!!");
         }
     }
 }
