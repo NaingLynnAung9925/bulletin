@@ -6,6 +6,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Category;
+use DB;
 
 class PostDao implements PostDaoInterface
 {
@@ -41,15 +42,29 @@ class PostDao implements PostDaoInterface
     public function getPostCreate($request)
     {
         
+        
         $post = new Post([
             'title' => $request->title,
             'description' => $request->description,
             'created_user_id' => $request->created_user_id,
-            'updated_user_id' => $request->created_user_id
+            'updated_user_id' => $request->created_user_id,
         ]);
+        
+
         $post->save();
-        $category = Category::whereIn('category_name', $request->categories)->get();
-        $post->categories()->attach($category);
+        foreach($request->categories as $category_name){
+            $category = Category::where('category_name', $category_name)->first();
+             DB::table('category_post')->insert([
+                'post_id'   => $post->id,
+                'category_id'   => $category->id
+            ]);
+        }
+
+        // $category = Category::whereIn('category_name', $request->categories)->get();
+        // $post->categories()->saveMany($category);
+      
+        // $category = Category::whereIn('category_name', $request->categories)->get();
+        // $post->categories()->attach($category);
         return $post;
     }
     public function postDelete($id)
@@ -70,7 +85,8 @@ class PostDao implements PostDaoInterface
         $post = [
             'id' => $request->id,
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            'categories' => $request->categories
         ];
         return $post;
     }
@@ -80,6 +96,19 @@ class PostDao implements PostDaoInterface
         $post->title = $request->title;
         $post->description = $request->description;
         $post->updated_user_id = Auth::user()->id;
+
+        DB::table('category_post')->where('post_id', $post->id)->delete();
+        
+        foreach($request->categories as $category_name){
+            $category = Category::where('category_name', $category_name)->first();
+            DB::table('category_post')->insert([
+                'post_id'   => $post->id,
+                'category_id'   => $category->id
+            ]);
+        }
+
+        // $post->categories()->detach($category);
+        // $post->categories()->attach($category);
         $post->update();
         return $post;
     }

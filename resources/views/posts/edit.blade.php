@@ -19,6 +19,14 @@
       <p class="text-danger">{{$message}}</p>
     @enderror
     </div>
+    <div>
+      <label for="category">Category List : </label>
+      <select name="categories[]" id="category" multiple class="form-select">
+        @foreach ($categories as $category)
+          <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
+        @endforeach
+      </select>
+    </div>
     <div class="mt-3">
       <a href="{{ route('post.index') }}" class="btn btn-dark">Back</a>
       <button class="btn btn-color" type="submit">Edit</button>

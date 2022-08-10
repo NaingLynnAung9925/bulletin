@@ -67,7 +67,8 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = $this->postService->postEdit($id);
-        return view('posts.edit', ['post' => $post]);
+        $categories = $this->postService->getCategory();
+        return view('posts.edit', ['post' => $post, 'categories' => $categories]);
     }
 
     public function edit_confirm(PostCreateRequest $request)

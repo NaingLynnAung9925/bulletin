@@ -40,7 +40,11 @@
     <tr>
       <td> {{ $post['title'] }}</td>
       <td> {{ $post['description']}} </td>
-      <td>{{ $post->categories }}</td>
+      <td>
+        @foreach ($post->categories as $category)
+          {{ $category->category_name }}
+        @endforeach
+      </td>
       <td> {{ $post->user->name }}</td>
       <td>
         <a href="{{ route('post.edit', $post->id) }}" class="btn btn-sm btn-outline-secondary d-inline me-3">Edit</a>
