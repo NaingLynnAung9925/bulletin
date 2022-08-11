@@ -10,7 +10,7 @@ use DB;
 
 class PostDao implements PostDaoInterface
 {
-    public function getPostList($request)
+    public function getPostList()
     {
         $id = Auth::user()->id;
         $user = User::find($id);

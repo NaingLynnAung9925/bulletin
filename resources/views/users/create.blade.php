@@ -4,7 +4,9 @@
 
 	<form action="{{ route('user.create_confirm')}}" method="POST" enctype="multipart/form-data" class="form-width">
 		@csrf
-		<h2>User Create</h2>
+		<div class="image-center">
+			<img src="{{ asset('images/profile.png') }}" alt="Profile Image" width="100" height="100" class="rounded-circle" id="image">
+		</div>
 		<div class="">
 			<label for="name">Name</label>
 			<input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
@@ -54,7 +56,7 @@
 		</div>
 		<div>
 			<label for="image">Profile</label>
-			<input type="file" name="image" id="image" class="form-control">
+			<input type="file" name="image" id="image" class="form-control" onchange="readURL(this)">
 		</div>
 		<div class="mt-3">
 			<a href="{{ route('user.index') }}" class="btn btn-dark">Back</a>

@@ -8,7 +8,7 @@
   <input type="hidden" name="image" value="{{$user['image'] }}">
   
   <div class="image-center">
-    <img src="{{ asset($user['image']) }}" alt="Profile Image" class=" rounded-circle" width="100" height="100">
+    <img src="{{ asset($user['image']) }}" alt="Profile Image" class=" rounded-circle" width="100" height="100" id="image">
   </div>
   @endif
    <div>

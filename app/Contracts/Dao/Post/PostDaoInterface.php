@@ -4,7 +4,7 @@ namespace App\Contracts\Dao\Post;
 
 interface PostDaoInterface
 {
-    public function getPostList($request);
+    public function getPostList();
     public function getCategory();
     public function getPostConfirm($request);
     public function getPostCreate($request);

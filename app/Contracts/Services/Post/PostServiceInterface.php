@@ -4,7 +4,7 @@ namespace App\Contracts\Services\Post;
 
 interface PostServiceInterface
 {
-    public function getPostList($request);
+    public function getPostList();
     public function getCategory();
     public function getPostConfirm($request);
     public function getPostCreate($request);

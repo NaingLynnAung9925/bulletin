@@ -4,7 +4,7 @@
   <form action="{{ route('user.edit_confirm') }}" method="POST" enctype="multipart/form-data" class="form-width">
     @csrf
 		<div class="image-center">
-			<img src="{{ asset($user->image) }}" alt="Profile Image" width="100" height="100" class="rounded-circle">
+			<img src="{{ asset($user->image) }}" alt="Profile Image" width="100" height="100" class="rounded-circle" id="image">
 		</div>
     <input type="hidden" name="id" value="{{ $user->id }}">
     <div class="">
@@ -46,7 +46,7 @@
 		</div>
 		<div>
 			<label for="image">Profile</label>
-			<input type="file" name="image" id="image" class="form-control" value="{{ $user->image }}">
+			<input type="file" name="image" id="image" class="form-control" value="{{ $user->image }}" onchange="readURL(this)">
 		</div>
 		<button class="btn btn-color mt-3" type="submit">Update</button>
   </form>
